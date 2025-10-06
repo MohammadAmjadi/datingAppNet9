@@ -1,0 +1,55 @@
+<nav class="fixed-top bg-primary navbar navbar-expand-md navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/" routerLinkActive="active"
+      >Dating App</a
+    >
+
+    <ul class="me-auto mb-2 mb-md-0 navbar-nav">
+      @if(accountService.currentUser()){
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/members" routerLinkActive="active">Matches</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/lists" routerLinkActive="active">Lists</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messages</a>
+      </li>
+      }
+        <li class="nav-item">
+        <a class="nav-link" routerLink="/errors" routerLinkActive="active">Errors</a>
+      </li>
+    </ul>
+
+    @if(accountService.currentUser()){
+    <div dropdown class="dropdown">
+      <a
+        dropdownToggle
+        class="text-light text-decoration-none no-underline cursor-pointer dropdown-toggle"
+        >Welcome {{accountService.currentUser()?.username | titlecase}}
+      </a >
+      <div *dropdownMenu="" class="dropdown-menu">
+        <a class="cursor-pointer dropdown-item">Edit profile</a>
+        <a (click)="logout()" class="cursor-pointer dropdown-item">Logout</a>
+      </div>
+    </div>
+    } @if(!accountService.currentUser()){
+    <form class="d-flex" #loginForm (ngSubmit)="login()">
+      <input
+        class="me-2 form-control"
+        name="username"
+        [(ngModel)]="model.username"
+        placeholder="Username"
+      />
+      <input
+        class="me-2 form-control"
+        name="password"
+        [(ngModel)]="model.password"
+        placeholder="Password"
+        type="password"
+      />
+      <button class="btn-success btn" type="submit">Login</button>
+    </form>
+    }
+  </div>
+</nav>
